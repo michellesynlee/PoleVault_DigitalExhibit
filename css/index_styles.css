@@ -1,0 +1,242 @@
+/* RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* BASE */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f6f6f6;
+  color: #000;
+}
+
+/* CENTER PAGE */
+.home {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* EXHIBITION FRAME */
+.exhibit-frame {
+  position: relative;
+  z-index: 0;
+
+  /* FULL SCREEN */
+  width: 100vw;
+  height: 100vh;
+
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+
+  padding: 7rem 5rem;
+
+  background: #fff;
+  box-shadow: none; /* optional: feels more immersive */
+}
+
+.exhibit-frame::before,
+.exhibit-frame::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  background: #000;
+  pointer-events: none;
+
+  /* animate geometry */
+  transition: left 0.6s ease, right 0.6s ease;
+}
+
+
+.exhibit-frame::before {
+  top: 25%;
+
+  /* resting (closed) position */
+  left: -26vw;
+  right: 0vw;
+
+  z-index: 1; /* behind back image */
+  box-shadow: 0 40px 0 #000;
+}
+
+.exhibit-frame::after {
+  bottom: 25%;
+
+  /* resting (closed) position */
+  left: -10vw;
+  right: -26vw;
+
+  z-index: 4; /* above images */
+  box-shadow: 0 -40px 0 #000;
+}
+
+/* ===== EXIT TRANSITION ===== */
+.exhibit-frame.exiting::before {
+  left: -120vw;
+  right: 120vw;
+}
+
+.exhibit-frame.exiting::after {
+  left: 120vw;
+  right: -120vw;
+}
+
+/* Right side falls away */
+.exhibit-frame.exiting .home-stage {
+  transform: translateY(80vh);
+  opacity: 0;
+  transition: transform 0.7s ease, opacity 0.7s ease;
+}
+
+/* Left title morphs */
+.exhibit-frame.exiting .home-text h1 {
+  transform: translateX(6rem) scale(0.95);
+  opacity: 0.9;
+  transition: transform 0.7s ease, opacity 0.7s ease;
+}
+
+/* Smooth everything */
+.home-stage,
+.home-text h1 {
+  transition: transform 0.7s ease, opacity 0.7s ease;
+}
+
+/* OPENING ANIMATION ON IMAGE HOVER */
+.exhibit-frame:has(.image-stage:hover)::before {
+  left: -65vw;   /* top lines swing LEFT */
+  right: 45vw;
+}
+
+.exhibit-frame:has(.image-stage:hover)::after {
+  left: 90vw;    /* bottom lines swing RIGHT */
+  right: -115vw;
+}
+
+/* LEFT TEXT */
+.home-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 6.5rem;
+}
+
+.home-text h1 {
+  font-size: 4.5rem;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.6rem;
+  opacity: 0.7;
+}
+
+/* RIGHT STAGE */
+.home-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* IMAGE STAGE */
+.image-stage {
+  position: relative;
+  width: 400px;
+  height: 600px;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
+}
+
+/* PANELS */
+.panel {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.6s ease;
+}
+
+/* FRONT IMAGE */
+.panel-front {
+  z-index: 3;
+  transform: translateX(0);
+}
+
+.panel-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+/* SHADOW IMAGE */
+.panel-shadow {
+  z-index: 1;
+  transform: translate(-28px, -28px); /* LEFT + UP */
+  opacity: 0.55;
+}
+
+.panel-shadow img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* BACK NAV PANEL */
+.panel-back {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel-back ul {
+  list-style: none;
+  padding-right: 9.5rem;
+}
+
+.panel-back li {
+  margin-bottom: 1rem;
+}
+
+.panel-back a {
+  font-size: 2.25rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #000;
+  display: inline-block; /* REQUIRED for transform */
+  transition: transform 0.2s ease;
+}
+
+.panel-back a:hover {
+  transform: scale(1.06);
+}
+
+/* HOVER / FOCUS INTERACTION */
+.image-stage {
+  position: relative;
+  width: 390px;
+  height: 520px;
+  overflow: visible; /* KEY CHANGE */
+}
+
+.image-stage:hover .panel-front,
+.image-stage:focus-within .panel-front {
+  transform: translate(55vw, 35vh);
+  pointer-events: none; /* KEY FIX */
+}
+
+/* ACCESSIBILITY: REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    transition: none;
+  }
+}
