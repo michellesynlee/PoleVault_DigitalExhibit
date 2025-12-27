@@ -335,7 +335,7 @@ body {
 /* ================================================== training html ========================= ========================= =========================  */
 
 .training-page {
-  height: 500vh;               /* 👈 ONE SCREEN */
+  height: 700vh;               /* 👈 ONE SCREEN */
   padding: 10vh 8vw 0;
   position: relative;
   overflow: hidden;
@@ -438,3 +438,129 @@ body {
     direction: ltr;
   }
 }
+
+/* ===================== */
+/* DRILLS SECTION */
+/* ===================== */
+
+.drills-wrapper {
+  padding: 8vh 6vw 12vh;
+}
+
+.drills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 4vw;
+}
+
+/* CARD */
+.drill-card {
+  perspective: 1200px;
+  cursor: pointer;
+}
+
+.drill-card-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+}
+
+/* FLIP STATE */
+.drill-card.flipped .drill-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* SIDES */
+.drill-front,
+.drill-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* FRONT IMAGE */
+.drill-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.4s ease;
+}
+
+/* COLOR AFTER FIRST FLIP */
+.drill-card.colored .drill-front img {
+  filter: grayscale(0%);
+}
+
+.drill-back {
+  transform: rotateY(180deg);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #4b4b4b9a;
+}
+
+/* BACK IMAGE — same photo, mirrored */
+.drill-back img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  transform: scaleX(-1);
+  filter: grayscale(80%) brightness(0.5);
+  opacity: 0.6;
+}
+
+/* TEXT OVERLAY 
+.drill-back-text {
+  position: absolute;
+  left: 1.5rem;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 2;
+
+  background: rgba(106, 100, 100, 0);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+}*/
+
+.drill-back-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+
+  text-align: center;
+  max-width: 80%;
+
+  background: none;
+  padding: 0;
+}
+
+.drill-back-text h3 {
+  font-size: 1.6rem;              /* ⬆️ bigger title */
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.04em;
+}
+ 
+.drill-back-text p {
+  font-size: 1.05rem;             /* ⬆️ larger body */
+  color: rgb(255, 255, 255);
+  line-height: 1.5;
+}
+
+.drill-back-text h3,
+.drill-back-text p {
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.65);
+}
+
+

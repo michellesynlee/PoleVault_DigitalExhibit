@@ -55,3 +55,17 @@ document.addEventListener('DOMContentLoaded', () => {
   trainingImages.forEach(img => colorObserver.observe(img));
 });
 
+
+
+document.querySelectorAll('.drill-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const flipped = card.classList.contains('flipped');
+
+    if (flipped) {
+      card.classList.remove('flipped');
+      card.classList.add('colored'); // stays color
+    } else {
+      card.classList.add('flipped');
+    }
+  });
+});
