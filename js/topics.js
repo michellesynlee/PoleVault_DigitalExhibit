@@ -69,3 +69,45 @@ document.querySelectorAll('.drill-card').forEach(card => {
     }
   });
 });
+
+
+const cards = document.querySelectorAll(".athlete-card");
+const overlay = document.getElementById("athleteOverlay");
+
+const overlayMain = overlay.querySelector(".overlay-main");
+const overlaySecondary = overlay.querySelector(".overlay-secondary");
+const overlayName = overlay.querySelector(".overlay-name");
+const overlayDescription = overlay.querySelector(".overlay-description");
+
+cards.forEach(card => {
+  card.addEventListener("click", () => {
+    overlayMain.src = card.dataset.main;
+    overlaySecondary.src = card.dataset.secondary;
+    overlayName.textContent = card.dataset.name;
+    overlayDescription.textContent = card.dataset.description;
+
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+  });
+});
+
+overlay.addEventListener("click", () => {
+  overlay.classList.remove("active");
+  document.body.style.overflow = "";
+});
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    overlay.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+});
+
+
+const backButton = document.querySelector(".overlay-back");
+
+backButton.addEventListener("click", e => {
+  e.stopPropagation(); // prevent overlay click-close
+  overlay.classList.remove("active");
+  document.body.style.overflow = "";
+});

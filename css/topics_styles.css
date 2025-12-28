@@ -11,10 +11,11 @@ html, body {
 
 /* BASE */
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  /*font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;*/
   background: transparent;
   color: #000;
   overflow-y: scroll;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* BIG SCROLLING CANVAS */
@@ -332,13 +333,34 @@ body {
   }
 }
 
+
+/* BACK TO TOPICS LINK */
+.back-to-topics {
+  text-align: center;
+  margin: 10vh 0 -15vh;
+}
+
+.back-to-topics a {
+  font-size: 1.5rem;      /* ⬅️ bigger */
+  font-style: italic;
+  color: #000;
+  text-decoration: none;
+  opacity: 0.5;
+  transition: opacity 0.25s ease;
+}
+
+.back-to-topics a:hover {
+  opacity: 1;
+}
+
+
 /* ================================================== training html ========================= ========================= =========================  */
 
 .training-page {
-  height: 700vh;               /* 👈 ONE SCREEN */
-  padding: 10vh 8vw 0;
+  min-height: 100vh;   /* ensures at least one screen */
+  padding: 8vh 8vw 0vh;
   position: relative;
-  overflow: hidden;
+  overflow: visible;  /* allow content to expand */
 }
 
 /* TITLE */
@@ -369,9 +391,6 @@ body {
 }
 
 /* FLIP */
-.training-section.reverse {
-  grid-template-columns: 1fr 1fr;
-}
 
 .training-section.reverse .training-text {
   grid-column: 2;  
@@ -421,7 +440,7 @@ body {
   margin-right: calc(50% - 50vw);
 }
 
-/* LEFT images — controlled bleed */
+/* LEFT images — controlled bleed  */
 .training-section.reverse .training-image img {
   margin-left: clamp(-8vw, -10vw, -12vw);
   margin-right: 0;
@@ -513,7 +532,7 @@ body {
   object-fit: cover;
 
   transform: scaleX(-1);
-  filter: grayscale(80%) brightness(0.5);
+  filter: grayscale(70%) brightness(0.5);
   opacity: 0.6;
 }
 
@@ -563,4 +582,202 @@ body {
   text-shadow: 0 3px 10px rgba(0, 0, 0, 0.65);
 }
 
+
+/* MEDIUM SCREENS — keep bleed, prevent text squashing */
+@media (max-width: 1200px) {
+  .training-text {
+    max-width: 560px;
+  }
+}
+
+@media (max-width: 900px) {
+  .training-section {
+    grid-template-columns: 1fr;
+    gap: 6vh;
+  }
+
+  .training-image img {
+    width: 100%;
+    margin: 0;
+  }
+
+  .training-section.reverse .training-text {
+    text-align: left;
+    justify-self: start;
+    margin-right: 0;
+  }
+}
+
+
+/* ================================================== athletes html ========================= ========================= =========================  */
+
+.athletes-page {
+  min-height: 100vh;   /* ensures at least one screen */
+  padding: 8vh 8vw 0vh;
+  position: relative;
+  overflow: visible;  /* allow content to expand */
+}
+
+/* ========================= */
+/* ATHLETES GRID */
+/* ========================= */
+
+.athletes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 320px));
+  justify-content: start;   /* important */
+  gap: 6vh 4vw;
+  margin-bottom: 20vh;
+}
+
+/* CARD */
+.athlete-card {
+  cursor: pointer;
+  max-width: 320px;
+}
+
+/* IMAGE STACK */
+.athlete-images {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+}
+
+.athlete-images img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease, z-index 0.2s ease;
+}
+
+/* secondary behind + offset */
+.athlete-images .secondary {
+  z-index: 1;
+  transform: translate(18px, 18px);
+}
+
+/* main in front */
+.athlete-images .main {
+  z-index: 2;
+}
+
+/* HOVER: swap layers */
+.athlete-card:hover .secondary {
+  z-index: 2;
+  transform: translate(0, 0);
+}
+
+.athlete-card:hover .main {
+  z-index: 1;
+  transform: translate(-18px, -18px);
+}
+
+/* NAME */
+.athlete-name {
+  margin-top: 2.5rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ========================= */
+/* FULLSCREEN ATHLETE VIEW */
+/* ========================= */
+
+.athlete-overlay {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.athlete-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay-content {
+  display: grid;
+  grid-template-columns: 42% 1fr;
+  gap: 6vw;
+
+  width: 100%;
+  height: 100%;
+  padding: 10vh 8vw;
+  margin-top: 4vh;          /* 👈 MOVE EVERYTHING DOWN */
+  position: relative;
+}
+
+
+/* LEFT IMAGE */
+.overlay-main {
+  width: 100%;
+  max-height: 75vh;
+  object-fit: cover;
+}
+
+/* RIGHT TEXT */
+.overlay-name {
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-style: italic;
+  margin-bottom: 2vh;
+}
+
+.overlay-description {
+  max-width: 720px;
+  font-size: 1.2rem;
+  line-height: 1.65;
+}
+
+/* SECONDARY IMAGE */
+.overlay-secondary {
+  position: absolute;
+  right: 23vw;
+  bottom: 15vh;
+  width: 28%;
+  object-fit: cover;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+
+/* BACK / EXIT BUTTON */
+.overlay-back {
+  position: absolute;
+  top: 6vh;
+  left: 4vw;
+
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  z-index: 10;
+}
+
+.overlay-back img {
+  width: 42px;
+  height: auto;
+  opacity: 0.85;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.overlay-back:hover img {
+  transform: translateX(-6px);
+  opacity: 1;
+}
+
+
+/* ================================================== science html ========================= ========================= =========================  */
+
+.science-page {
+  min-height: 100vh;   /* ensures at least one screen */
+  padding: 8vh 8vw 0vh;
+  position: relative;
+  overflow: visible;  /* allow content to expand */
+}
 

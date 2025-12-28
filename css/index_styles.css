@@ -166,8 +166,8 @@ body {
 }
 
 .panel-front img {
-  width: 100%;
-  height: 100%;
+  width: 105%;
+  height: 105%;
   object-fit: cover;
   border-radius: 10px;
   display: block;
@@ -223,8 +223,8 @@ body {
 /* HOVER / FOCUS INTERACTION */
 .image-stage {
   position: relative;
-  width: 390px;
-  height: 520px;
+  width: 400px;
+  height: 590px;
   overflow: visible; /* KEY CHANGE */
 }
 
