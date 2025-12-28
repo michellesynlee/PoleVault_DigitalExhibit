@@ -108,7 +108,7 @@ body {
 /* OPENING ANIMATION ON IMAGE HOVER */
 .exhibit-frame:has(.image-stage:hover)::before {
   left: -65vw;   /* top lines swing LEFT */
-  right: 45vw;
+  right: 42vw;
 }
 
 .exhibit-frame:has(.image-stage:hover)::after {
