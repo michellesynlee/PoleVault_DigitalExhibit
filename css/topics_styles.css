@@ -624,7 +624,7 @@ body {
 
 .athletes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 320px));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 360px));
   justify-content: start;   /* important */
   gap: 6vh 4vw;
   margin-bottom: 20vh;
